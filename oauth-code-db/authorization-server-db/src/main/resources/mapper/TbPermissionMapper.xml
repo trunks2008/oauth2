@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.auth.mapper.TbPermissionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cn.auth.domain.TbPermission">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="name" property="name"/>
+        <result column="ename" property="ename"/>
+        <result column="url" property="url"/>
+        <result column="description" property="description"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, parent_id, name, ename, url, description, create_time, update_time
+    </sql>
+
+    <select id="queryByUserId" resultType="com.cn.auth.domain.TbPermission">
+        select p.id, p.parent_id, p.name, p.ename, p.url, p.description, p.create_time, p.update_time
+        from
+        tb_user as u
+        left join tb_user_role as ur on u.id=ur.user_id
+        left join tb_role as r on r.id=ur.role_id
+        left join tb_role_permission as rp on rp.role_id=r.id
+        left join tb_permission as p on p.id=rp.permission_id
+        where u.id= #{userId}
+    </select>
+
+</mapper>

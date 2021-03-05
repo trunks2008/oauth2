@@ -1,0 +1,12 @@
+# Maven #
+target/
+
+# IDEA #
+.idea/
+*.iml
+
+# Project #
+logs/
+doc/
+bin/
+
